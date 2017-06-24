@@ -33,7 +33,8 @@ export default class LoginScreen extends Component {
 				password: '',
 		}
 	}
-static navigationOptions = {
+
+ static navigationOptions = {
     title: 'Welcome',
   };
 
@@ -90,7 +91,6 @@ fetch('http://192.168.0.101:3001/login', {
 		console.error(error);
 	  });
 	}
-
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -139,11 +139,7 @@ fetch('http://192.168.0.101:3001/login', {
               <Text style={styles.accountText}>Don not have an account?</Text>
               <TouchableOpacity activeOpacity={.5} >
                 <View>
-					<Button
-						  onPress={() => navigate('signUp')}
-						  title="Sign Up"
-						/>
-                </View>
+                               </View>
               </TouchableOpacity>
             </View>
           </View>

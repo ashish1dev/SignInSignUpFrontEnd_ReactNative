@@ -8,6 +8,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+	Button,
   View,
   Image,
   TextInput,
@@ -15,6 +16,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { StackNavigator } from 'react-navigation';
 const background = require("./signup_bg.png");
 const backIcon = require("./back.png");
 const personIcon = require("./signup_person.png");
@@ -33,7 +35,9 @@ export default class SignupVriew extends Component {
 				email: '',
 		}
 	}
-
+static navigationOptions = {
+    title: 'hello',
+  };
 
 	setName = (value) => {
 		AsyncStorage.setItem('username', value);
@@ -70,6 +74,7 @@ export default class SignupVriew extends Component {
 
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <Image 
@@ -89,7 +94,10 @@ export default class SignupVriew extends Component {
             </View>
 
             <View style={styles.headerTitleView}>
-              <Text style={styles.titleViewText}>Sign Up</Text>
+					<Button
+						  onPress={() => navigate('login')}
+						  title="Sign In"
+						/>
             </View>
 
           </View>
