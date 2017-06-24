@@ -1,4 +1,9 @@
-import React, { Component } from 'react'
+{/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */}
+import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -6,8 +11,9 @@ import {
   View,
   Image,
   TextInput,
+	AsyncStorage,
   TouchableOpacity
-} from 'react-native'
+} from 'react-native';
 
 const background = require("./signup_bg.png");
 const backIcon = require("./back.png");
@@ -17,6 +23,52 @@ const emailIcon = require("./signup_email.png");
 const birthdayIcon = require("./signup_birthday.png");
 
 export default class SignupVriew extends Component {
+
+
+	constructor(props){
+		super(props)
+		this.state = {
+				username: '',
+				password: '',
+				email: '',
+		}
+	}
+
+
+	setName = (value) => {
+		AsyncStorage.setItem('username', value);
+		this.setState({ 'username': value });
+	}
+
+	setPassword = (value) => {
+		AsyncStorage.setItem('password', value);
+		this.setState({ 'password': value });
+	}
+
+	setEmail = (value) => {
+		AsyncStorage.setItem('email', value);
+		this.setState({ 'email': value });
+	}
+
+	joinUs = () => {
+		fetch('http://192.168.0.101:3001/signUp', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				username: this.state.username,
+				password: this.state.password,
+				email: this.state.email,
+			})
+		});
+	}
+
+
+
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -26,7 +78,6 @@ export default class SignupVriew extends Component {
           resizeMode="cover"
         >
           <View style={styles.headerContainer}>
-
             <View style={styles.headerIconView}>
               <TouchableOpacity style={styles.headerBackButtonView}>
                 <Image 
@@ -55,8 +106,9 @@ export default class SignupVriew extends Component {
               </View>
               <TextInput
                 style={[styles.input, styles.whiteFont]}
-                placeholder="Name"
-                placeholderTextColor="#FFF"
+                placeholder="username"
+				onChangeText = {this.setName}
+				placeholderTextColor="#FFF"
                 underlineColorAndroid='transparent' 
               />
             </View>
@@ -72,6 +124,7 @@ export default class SignupVriew extends Component {
               <TextInput
                 style={[styles.input, styles.whiteFont]}
                 placeholder="Email"
+				onChangeText = {this.setEmail}
                 placeholderTextColor="#FFF" 
               />
             </View>
@@ -88,31 +141,16 @@ export default class SignupVriew extends Component {
                 secureTextEntry={true}
                 style={[styles.input, styles.whiteFont]}
                 placeholder="Password"
+				onChangeText = {this.setPassword}
                 placeholderTextColor="#FFF" 
               />
             </View>
 
-            <View style={styles.inputContainer}>
-              <View style={styles.iconContainer}>
-                <Image 
-                  source={birthdayIcon} 
-                  style={styles.inputIcon} 
-                  resizeMode="contain"
-                />
-              </View>
-              <TextInput
-                style={[styles.input, styles.whiteFont]}
-                placeholder="Birthday"
-                placeholderTextColor="#FFF"
-                underlineColorAndroid='transparent' 
-              />
-            </View>
-
-          </View>
+                      </View>
 
           <View style={styles.footerContainer}>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.joinUs}>
               <View style={styles.signup}>
                 <Text style={styles.whiteFont}>Join</Text>
               </View>

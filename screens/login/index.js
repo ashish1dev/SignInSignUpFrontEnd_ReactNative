@@ -1,5 +1,12 @@
+{/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */}
 import React, { Component } from 'react';
 import {
+AsyncStorage,
+	Alert,
   AppRegistry,
   StyleSheet,
   Text,
@@ -19,6 +26,69 @@ const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
 
 export default class LoginScreen extends Component {
+    	constructor(props){
+		super(props)
+		this.state = {
+				username: '',
+				password: '',
+		}
+	}
+
+
+	setName = (value) => {
+		AsyncStorage.setItem('username', value);
+		this.setState({ 'username': value });
+	}
+
+	setPassword = (value) => {
+		AsyncStorage.setItem('password', value);
+		this.setState({ 'password': value });
+	}
+
+
+/* checkCredentials() {
+ *         console.log("hello popup");
+ *          fetch("http://192.168.0.101:3001/login", {method: "POST", headers body: JSON.stringify({username: "admin", password: "admin",})})
+ *         .then((response) => response.json())
+ *         .then((responseData) => {
+ *             [> console.log("you are into fetch"); <]
+ *             Alert.alert(
+ *                 "POST Response",
+ *                 "Response Body -> " + (responseData.status)
+ *             )
+ *             console.log("responseData", responseData);
+ *         }).catch((error) => {
+ *         console.error(error);
+ *       });
+ *     }
+ *  */
+
+
+
+	checkCredentials = () => {
+fetch('http://192.168.0.101:3001/login', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+			username: this.state.username,
+			password: this.state.password,
+  })
+}).then((response) => response.json())
+		.then((responseData) => {
+			/* console.log("you are into fetch"); */
+			Alert.alert(
+				"POST Response",
+				"Response Body -> " + (responseData.status)
+			)
+			console.log("responseData", responseData);
+		}).catch((error) => {
+		console.error(error);
+	  });
+	}
+
   render() {
     return (
       <View style={styles.container}>
@@ -33,6 +103,7 @@ export default class LoginScreen extends Component {
               </View>
               <TextInput 
                 placeholder="Username" 
+				onChangeText = {this.setName}
                 placeholderTextColor="#FFF"
                 style={styles.input} 
               />
@@ -44,6 +115,7 @@ export default class LoginScreen extends Component {
               <TextInput 
                 placeholderTextColor="#FFF"
                 placeholder="Password" 
+				onChangeText = {this.setPassword}
                 style={styles.input} 
                 secureTextEntry 
               />
@@ -53,16 +125,16 @@ export default class LoginScreen extends Component {
                 <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={.5}>
-              <View style={styles.button}>
+            <TouchableOpacity activeOpacity={.5} onPress={this.checkCredentials}>
+              <View style={styles.button} >
                 <Text style={styles.buttonText}>Sign In</Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.container}>
             <View style={styles.signupWrap}>
-              <Text style={styles.accountText}>Don't have an account?</Text>
-              <TouchableOpacity activeOpacity={.5}>
+              <Text style={styles.accountText}>Don not have an account?</Text>
+              <TouchableOpacity activeOpacity={.5} >
                 <View>
                   <Text style={styles.signupLinkText}>Sign Up</Text>
                 </View>
