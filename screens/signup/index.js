@@ -6,6 +6,8 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+	Linking,
+	Platform,
   StyleSheet,
   Text,
 	Button,
@@ -16,6 +18,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SafariView from 'react-native-safari-view';
 import { StackNavigator } from 'react-navigation';
 const background = require("./signup_bg.png");
 const backIcon = require("./back.png");
@@ -24,7 +28,10 @@ const lockIcon = require("./signup_lock.png");
 const emailIcon = require("./signup_email.png");
 const birthdayIcon = require("./signup_birthday.png");
 
-export default class SignupVriew extends Component {
+
+
+
+export default class SignupView extends Component {
 
 
 	constructor(props){
@@ -33,8 +40,66 @@ export default class SignupVriew extends Component {
 				username: '',
 				password: '',
 				email: '',
+				user: undefined, // user has not logged in yet
 		}
 	}
+
+
+//Set up Linking
+  componentDidMount() {
+    // Add event listener to handle OAuthLogin:// URLs
+    Linking.addEventListener('url', this.handleOpenURL);
+    // Launched from an external URL
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        this.handleOpenURL({ url });
+      }
+    });
+  };
+
+  componentWillUnmount() {
+    // Remove event listener
+    Linking.removeEventListener('url', this.handleOpenURL);
+  };
+
+  handleOpenURL = ({ url }) => {
+    // Extract stringified user string out of the URL
+    const [, user_string] = url.match(/user=([^#]+)/);
+    this.setState({
+      // Decode the user string and parse it into JSON
+      user: JSON.parse(decodeURI(user_string))
+    });
+    if (Platform.OS === 'ios') {
+      SafariView.dismiss();
+    }
+  };
+
+  // Handle Login with Facebook button tap
+  loginWithFacebook = () => this.openURL('http://192.168.0.101:3001/auth/facebook');
+
+  // Handle Login with Google button tap
+  loginWithGoogle = () => this.openURL('http://192.168.0.101:3001/auth/google');
+
+  // Open URL in a browser
+  openURL = (url) => {
+    // Use SafariView on iOS
+    if (Platform.OS === 'ios') {
+      SafariView.show({
+        url: url,
+        fromBottom: true,
+      });
+    }
+    // Or Linking.openURL on Android
+    else {
+      Linking.openURL(url);
+    }
+  };
+
+
+
+
+
+
 static navigationOptions = {
     title: 'hello',
   };
@@ -92,15 +157,7 @@ static navigationOptions = {
                 />
               </TouchableOpacity>
             </View>
-
-            <View style={styles.headerTitleView}>
-					<Button
-						  onPress={() => navigate('login')}
-						  title="Sign In"
-						/>
-            </View>
-
-          </View>
+	          </View>
 
           <View style={styles.inputsContainer}>
 
@@ -163,18 +220,49 @@ static navigationOptions = {
                 <Text style={styles.whiteFont}>Join</Text>
               </View>
             </TouchableOpacity>
-
-            <TouchableOpacity>
-              <View style={styles.signin}>
-                <Text style={styles.greyFont}>Already have an account?<Text style={styles.whiteFont}> Sign In</Text></Text>
-              </View>
-            </TouchableOpacity>
+<View style={styles.signupWrap}>
+              <Text style={styles.accountText}>Already have an account?</Text>
+              <TouchableOpacity activeOpacity={.5} >
+                <View>
+					<Button
+						  onPress={() => navigate('login')}
+						  title="Sign In"
+						/>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
+<View style={styles.buttons}>
+          <Icon.Button
+            name="facebook"
+            backgroundColor="#3b5998"
+            onPress={this.loginWithFacebook}
+            {...iconStyles}
+          >
+            Login with Facebook
+          </Icon.Button>
+          <Icon.Button
+            name="google"
+            backgroundColor="#DD4B39"
+            onPress={this.loginWithGoogle}
+            {...iconStyles}
+          >
+            Or with Google
+          </Icon.Button>
+        </View>
         </Image>
       </View>
+
     );
   }
 }
+
+
+const iconStyles = {
+  borderRadius: 10,
+  iconStyle: { paddingVertical: 5 },
+};
+
 
 let styles = StyleSheet.create({
   container: {
@@ -187,6 +275,12 @@ let styles = StyleSheet.create({
   },
   headerContainer: {
     flex: 1,
+  },
+signupWrap: {
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputsContainer: {
     flex: 3,
@@ -256,5 +350,47 @@ let styles = StyleSheet.create({
   },
   whiteFont: {
     color: '#FFF'
-  }
+  },
+	buttonText: {
+    color: "#FFF",
+    fontSize: 18,
+  },
+	buttons: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    margin: 2,
+    marginBottom: 3,
+  },
+
+ content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: 20,
+  },
+  avatarImage: {
+    borderRadius: 50,
+    height: 100,
+    width: 100,
+  },
+  header: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  text: {
+    textAlign: 'center',
+    color: '#333',
+    marginBottom: 5,
+  },
+  buttons: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    margin: 20,
+    marginBottom: 30,
+  },
+
+
 })

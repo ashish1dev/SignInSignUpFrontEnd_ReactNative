@@ -16,6 +16,9 @@ import { StackNavigator } from 'react-navigation';
 
 import LoginScreen from "./screens/login/index";
 import SignupScreen from "./screens/signup/index";
+import innerPage from "./screens/innerpage/index";
+
+
 
 export default class screens extends Component {
 	render() {
@@ -30,6 +33,7 @@ export default class screens extends Component {
 const Home = StackNavigator({
 	login: { screen: LoginScreen },
 	signUp: { screen: SignupScreen },
+	innerpage: { screen: innerPage }
 });
 
 

@@ -15,8 +15,15 @@ AsyncStorage,
   Dimensions,
   TextInput,
   Button,
-  TouchableOpacity
+Linking,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
+
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SafariView from 'react-native-safari-view';
+
 import { StackNavigator } from 'react-navigation';
 const { width, height } = Dimensions.get("window");
 
@@ -25,14 +32,75 @@ const mark = require("./login1_mark.png");
 const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
 
+
+
+
+
+
+
 export default class LoginScreen extends Component {
     	constructor(props){
 		super(props)
 		this.state = {
 				username: '',
 				password: '',
+				user: undefined,
 		}
 	}
+
+
+componentDidMount() {
+    // Add event listener to handle OAuthLogin:// URLs
+    Linking.addEventListener('url', this.handleOpenURL);
+    // Launched from an external URL
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        this.handleOpenURL({ url });
+      }
+    });
+  };
+
+  componentWillUnmount() {
+    // Remove event listener
+    Linking.removeEventListener('url', this.handleOpenURL);
+  };
+
+  handleOpenURL = ({ url }) => {
+    // Extract stringified user string out of the URL
+    const [, user_string] = url.match(/user=([^#]+)/);
+    this.setState({
+      // Decode the user string and parse it into JSON
+      user: JSON.parse(decodeURI(user_string))
+    });
+    if (Platform.OS === 'ios') {
+      SafariView.dismiss();
+    }
+  };
+
+  // Handle Login with Facebook button tap
+  loginWithFacebook = () => this.openURL('http://192.168.0.101:3001/auth/facebook');
+
+  // Handle Login with Google button tap
+  loginWithGoogle = () => this.openURL('http://192.168.0.101:3001/auth/google');
+
+  // Open URL in a browser
+  openURL = (url) => {
+    // Use SafariView on iOS
+    if (Platform.OS === 'ios') {
+      SafariView.show({
+        url: url,
+        fromBottom: true,
+      });
+    }
+    // Or Linking.openURL on Android
+    else {
+      Linking.openURL(url);
+    }
+  };
+
+
+
+
 static navigationOptions = {
     title: 'Welcome',
   };
@@ -46,24 +114,6 @@ static navigationOptions = {
 		AsyncStorage.setItem('password', value);
 		this.setState({ 'password': value });
 	}
-
-
-/* checkCredentials() {
- *         console.log("hello popup");
- *          fetch("http://192.168.0.101:3001/login", {method: "POST", headers body: JSON.stringify({username: "admin", password: "admin",})})
- *         .then((response) => response.json())
- *         .then((responseData) => {
- *             [> console.log("you are into fetch"); <]
- *             Alert.alert(
- *                 "POST Response",
- *                 "Response Body -> " + (responseData.status)
- *             )
- *             console.log("responseData", responseData);
- *         }).catch((error) => {
- *         console.error(error);
- *       });
- *     }
- *  */
 
 
 
@@ -93,13 +143,14 @@ fetch('http://192.168.0.101:3001/login', {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { user } = this.state;
     return (
       <View style={styles.container}>
         <Image source={background} style={styles.background} resizeMode="cover">
-          <View style={styles.markWrap}>
+		<View style={styles.markWrap}>
             <Image source={mark} style={styles.mark} resizeMode="contain" />
           </View>
-          <View style={styles.wrapper}>
+                    <View style={styles.wrapper}>
             <View style={styles.inputWrap}>
               <View style={styles.iconWrap}>
                 <Image source={personIcon} style={styles.icon} resizeMode="contain" />
@@ -147,11 +198,39 @@ fetch('http://192.168.0.101:3001/login', {
               </TouchableOpacity>
             </View>
           </View>
+
+<View style={styles.buttons}>
+          <Icon.Button
+            name="facebook"
+            backgroundColor="#3b5998"
+            onPress={this.loginWithFacebook}
+            {...iconStyles}
+          >
+            Login with Facebook
+          </Icon.Button>
+          <Icon.Button
+            name="google"
+            backgroundColor="#DD4B39"
+            onPress={this.loginWithGoogle}
+            {...iconStyles}
+          >
+            Or with Google
+          </Icon.Button>
+        </View>
+
+
         </Image>
+
       </View>
     );
   }
 }
+
+
+const iconStyles = {
+  borderRadius: 10,
+  iconStyle: { paddingVertical: 5 },
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -198,7 +277,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
+    marginTop: 20,
   },
   buttonText: {
     color: "#FFF",
@@ -222,5 +301,34 @@ const styles = StyleSheet.create({
   signupLinkText: {
     color: "#FFF",
     marginLeft: 5,
-  }
+  },
+	 content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: 20,
+  },
+  avatarImage: {
+    borderRadius: 50,
+    height: 100,
+    width: 100,
+  },
+  header: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  text: {
+    textAlign: 'center',
+    color: '#333',
+    marginBottom: 5,
+  },
+  buttons: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    margin: 20,
+    marginBottom: 100,
+  },
 });
