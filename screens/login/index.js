@@ -152,6 +152,7 @@ fetch('http://192.168.0.101:3001/login', {
   render() {
     const { navigate } = this.props.navigation;
     const { user } = this.state;
+
     return (
       <View style={styles.container}>
         <Image source={background} style={styles.background} resizeMode="cover">
