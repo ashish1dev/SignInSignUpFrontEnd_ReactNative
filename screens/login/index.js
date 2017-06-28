@@ -130,16 +130,24 @@ fetch('http://192.168.0.101:3001/login', {
   })
 }).then((response) => response.json())
 		.then((responseData) => {
+			const { navigate } = this.props.navigation;
 			/* console.log("you are into fetch"); */
+			if (responseData.status == "Failure")
+			{
 			Alert.alert(
 				"POST Response",
 				"Response Body -> " + (responseData.status)
-			)
+			)}
+			if (responseData.status == "Success")
+			{
+				navigate('innerpage')
+			}
 			console.log("responseData", responseData);
 		}).catch((error) => {
 		console.error(error);
 	  });
 	}
+
 
   render() {
     const { navigate } = this.props.navigation;
