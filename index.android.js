@@ -5,8 +5,7 @@
  */}
 
 
-import React, { Component } from 'react';
-import {
+import React, { Component } from 'react'; import {
 	AppRegistry,
 	StyleSheet,
 	Text,
@@ -31,8 +30,13 @@ export default class screens extends Component {
 }
 
 const Home = StackNavigator({
-	innerpage: { screen: innerPage },
 	login: { screen: LoginScreen },
+	innerpage: { screen: innerPage,
+	headerMode: 'none',
+    header: null,
+    navigationOptions: {
+        header: null
+    } },
 	signUp: { screen: SignupScreen },
 });
 

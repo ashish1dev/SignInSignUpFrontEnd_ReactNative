@@ -103,6 +103,7 @@ componentDidMount() {
 
 static navigationOptions = {
     title: 'Welcome',
+	header: false
   };
 
 	setName = (value) => {
@@ -118,7 +119,7 @@ static navigationOptions = {
 
 
 	checkCredentials = () => {
-fetch('http://192.168.0.101:3001/login', {
+fetch('http://192.168.1.36:3001/login', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',

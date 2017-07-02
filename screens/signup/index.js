@@ -102,6 +102,7 @@ export default class SignupView extends Component {
 
 static navigationOptions = {
     title: 'hello',
+	header: false
   };
 
 	setName = (value) => {
