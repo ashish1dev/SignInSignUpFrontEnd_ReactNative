@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { COLOR, ThemeProvider, Toolbar } from 'react-native-material-ui';
 import Container from '../Container';
+import MapView from 'react-native-maps';
 
 const uiTheme = {
   palette: {

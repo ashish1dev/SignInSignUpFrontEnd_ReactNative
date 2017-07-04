@@ -125,7 +125,7 @@ export default class DrawerMenu extends Component {
                                       },
                                   },
 								{
-                                    icon: 'logout', value: 'Logout',
+                                    icon: 'android', value: 'Logout',
                                     active: this.state.active == 'Logout',
                                     onPress: () => {
                                         this.setState({ active: 'Logout' });

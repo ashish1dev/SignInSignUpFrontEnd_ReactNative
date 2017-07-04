@@ -6,6 +6,7 @@ import {
   StatusBar,
   View
 } from 'react-native';
+import MapView from 'react-native-maps'
 
 export default class TodayView extends Component {
   constructor(props, context) {
@@ -14,10 +15,16 @@ export default class TodayView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome to Today View
-          </Text>
+      <View style= { styles.container }>
+		<MapView 
+		style ={ styles.map	}
+		initialRegin = {{
+			latitude: 39.749632,
+			longitude: -105.000363,
+			latiduteDelta: 0.0222,
+			longitudeDelta: 0.0201,
+		}}
+		/>
         </View>
     );
   }
@@ -43,4 +50,11 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+	map: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+	},
 });
