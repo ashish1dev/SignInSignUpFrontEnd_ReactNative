@@ -12,6 +12,7 @@ import {
   Text,
 	Button,
   View,
+	Alert,
   Image,
   TextInput,
 	AsyncStorage,
@@ -121,7 +122,7 @@ static navigationOptions = {
 	}
 
 	joinUs = () => {
-		fetch('http://192.168.0.101:3001/signUp', {
+		fetch('http://192.168.43.114:3001/signUp', {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
@@ -132,7 +133,22 @@ static navigationOptions = {
 				password: this.state.password,
 				email: this.state.email,
 			})
-		});
+		}).then((response) => response.json())
+		.then((responseData) => {
+			/* console.log("you are into fetch"); */
+			if (responseData.error == true)
+			{
+			Alert.alert(
+				"POST Response",
+				"Response Body -> " + (responseData.message)
+			)}
+			if (responseData.error == false)
+			{
+			Alert.alert(
+				"POST Response",
+				"Response Body -> " + (responseData.message)
+			)}	
+		})
 	}
 
 
@@ -275,7 +291,7 @@ let styles = StyleSheet.create({
     height: null
   },
   headerContainer: {
-    flex: 1,
+    flex: -1,
   },
 signupWrap: {
     backgroundColor: "transparent",
@@ -284,8 +300,8 @@ signupWrap: {
     justifyContent: "center",
   },
   inputsContainer: {
-    flex: 3,
-    marginTop: 50,
+    flex: 2,
+    marginTop: 40,
   },
   footerContainer: {
     flex: 1
@@ -360,7 +376,7 @@ signupWrap: {
     justifyContent: 'space-between',
     flexDirection: 'row',
     margin: 2,
-    marginBottom: 3,
+    marginBottom: 5,
   },
 
  content: {
@@ -390,7 +406,7 @@ signupWrap: {
     justifyContent: 'space-between',
     flexDirection: 'row',
     margin: 20,
-    marginBottom: 30,
+    marginBottom: 10,
   },
 
 
