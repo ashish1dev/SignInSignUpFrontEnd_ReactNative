@@ -27,7 +27,7 @@ import SafariView from 'react-native-safari-view';
 import { StackNavigator } from 'react-navigation';
 const { width, height } = Dimensions.get("window");
 
-const background = require("./login1_bg.png");
+const background = require("./login1_bg.jpg");
 const mark = require("./login1_mark.png");
 const lockIcon = require("./login1_lock.png");
 const personIcon = require("./login1_person.png");
@@ -317,7 +317,7 @@ button2: {
     color: "#D8D8D8",
 	  paddingHorizontal: 20,
 	  marginTop: 20,
-	  fontSize: 20,
+	  fontSize: 18,
   },
   signupLinkText: {
     color: "#FFF",

@@ -22,7 +22,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SafariView from 'react-native-safari-view';
 import { StackNavigator } from 'react-navigation';
-const background = require("./signup_bg.png");
+const background = require("./signup_bg.jpg");
 const backIcon = require("./back.png");
 const personIcon = require("./signup_person.png");
 const lockIcon = require("./signup_lock.png");
@@ -419,7 +419,7 @@ button2: {
     color: "#D8D8D8",
 	 paddingHorizontal: 20,
 	 marginTop: 20,
-	 fontSize: 20
+	 fontSize: 18
   },
 
 
