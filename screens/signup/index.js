@@ -76,7 +76,7 @@ export default class SignupView extends Component {
   };
 
   // Handle Login with Facebook button tap
-  loginWithFacebook = () => this.openURL('http://192.168.0.101:3001/auth/facebook');
+  loginWithFacebook = () => this.openURL('http://192.168.43.114:3001/auth/facebook');
 
   // Handle Login with Google button tap
   loginWithGoogle = () => this.openURL('http://192.168.0.101:3001/auth/google');
@@ -240,11 +240,10 @@ static navigationOptions = {
 <View style={styles.signupWrap}>
               <Text style={styles.accountText}>Already have an account?</Text>
               <TouchableOpacity activeOpacity={.5} >
-                <View>
-					<Button
+                <View style={styles.button2} >
+					<Text style={styles.buttonText}
 						  onPress={() => navigate('login')}
-						  title="Sign In"
-						/>
+						>Sign In </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -378,6 +377,14 @@ signupWrap: {
     margin: 2,
     marginBottom: 5,
   },
+button2: {
+    backgroundColor: "#FF3366",
+    paddingVertical: 20,
+	paddingHorizontal: 40,
+    justifyContent: "center",
+    marginTop: 20,
+	height: 50,
+  },
 
  content: {
     flex: 1,
@@ -408,6 +415,13 @@ signupWrap: {
     margin: 20,
     marginBottom: 10,
   },
+ accountText: {
+    color: "#D8D8D8",
+	 paddingHorizontal: 20,
+	 marginTop: 20,
+	 fontSize: 20
+  },
+
 
 
 })

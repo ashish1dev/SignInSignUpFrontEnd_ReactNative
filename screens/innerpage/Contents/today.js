@@ -14,9 +14,14 @@ import MapView from 'react-native-maps'
 
 export default class TodayView extends Component {
 	state = {
-  mapRegion: null,
-  lastLat: null,
-  lastLong: null,
+  mapRegion: {
+        latitude:       26,
+        longitude:      77,
+        latitudeDelta:  0.00922*1.5,
+        longitudeDelta: 0.00421*1.5
+      },
+  lastLat: 26,
+  lastLong: 77,
 }
 
 componentDidMount() {
@@ -24,6 +29,7 @@ this.setPosition();
 
 	
     this.watchID = navigator.geolocation.watchPosition((position) => {
+			console.log("console log inside watcher", position);
       // Create the object to update this.state.mapRegion through the onRegionChange function
       let region = {
         latitude:       position.coords.latitude,
@@ -36,15 +42,44 @@ this.setPosition();
   }
 
 
+/* setPosition(){
+ *         navigator.geolocation.getCurrentPosition((position) => {
+ *         this.setState({
+ *             [> position: position <]
+ *             lastLat: position.coords.latitude,
+ *             lastLong: position.coords.longitude
+ *         });
+ *     }, (error) => {
+ *         alert(error)
+ *     }, {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000});
+ *     } */
+
+
+
 setPosition(){
 		navigator.geolocation.getCurrentPosition((position) => {
-        this.setState({
-            position: position
-        });
-    }, (error) => {
-        alert(error)
-    }, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
-	}
+			console.log("console log inside set position", position);
+
+let region = {
+        latitude:       position.coords.latitude,
+        longitude:      position.coords.longitude,
+        latitudeDelta:  0.00922*1.5,
+        longitudeDelta: 0.00421*1.5
+      }
+		this.setState({
+			/* position: position */
+			mapRegion: region,
+			lastLat: region.latitude,
+			lastLong: region.longitude
+		});
+	}, (error) => {
+		alert(error)
+	}, {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000});
+    }
+
+
+
+
 
 
 onRegionChange(region, lastLat, lastLong) {
@@ -60,27 +95,41 @@ onRegionChange(region, lastLat, lastLong) {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+	 
+
  render() {
     return (
       <View style={{flex: 1}}>
         <MapView
 		style={styles.map}
           region={this.state.mapRegion}
-          showsUserLocation={true}
-          followUserLocation={true}
           onRegionChange={this.onRegionChange.bind(this)}>
-          <MapView.Marker
+		{/*   <MapView.Marker
+         *     coordinate={{
+         *       latitude: (this.state.lastLat ) ,
+         *       longitude: (this.state.lastLong ),
+         *     }}>
+         *     <View>
+         *       <Text style={{color: '#000'}}>
+         *         { this.state.lastLong } / { this.state.lastLat }
+         *       </Text>
+         *     </View>
+         *   </MapView.Marker>
+         * </MapView> */}
+		{	/* <MapView.Marker coordinate={this.state.mapRegion} /> */}
+  <MapView.Marker
             coordinate={{
-              latitude: (this.state.lastLat + 0.00050) || -36.82339,
-              longitude: (this.state.lastLong + 0.00050) || -73.03569,
-            }}>
-            <View>
-              <Text style={{color: '#000'}}>
-                { this.state.lastLong } / { this.state.lastLat }
-              </Text>
-            </View>
-          </MapView.Marker>
-        </MapView>
+              latitude: this.state.lastLat ,
+              longitude: this.state.lastLong ,
+            }}
+           
+          /> 
+          </MapView> 
+<View style={styles.bubble}>
+          <Text style={{ textAlign: 'center'}}>
+            {`${this.state.lastLat.toPrecision(7)}, ${this.state.lastLong.toPrecision(7)}`}
+          </Text>
+        </View>
       </View>
     );
   }
@@ -115,6 +164,12 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 	},
+bubble: {
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    paddingHorizontal: 18,
+    paddingVertical: 12,
+    borderRadius: 20,
+  },
 });
 
 

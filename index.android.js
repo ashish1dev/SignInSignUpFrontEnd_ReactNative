@@ -30,14 +30,14 @@ export default class screens extends Component {
 }
 
 const Home = StackNavigator({
-	login: { screen: LoginScreen },
+	signUp: { screen: SignupScreen },
 	innerpage: { screen: innerPage,
 	headerMode: 'none',
     header: null,
     navigationOptions: {
         header: null
     } },
-	signUp: { screen: SignupScreen },
+	login: { screen: LoginScreen },
 });
 
 

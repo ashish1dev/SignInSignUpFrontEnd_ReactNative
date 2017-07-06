@@ -78,10 +78,10 @@ componentDidMount() {
   };
 
   // Handle Login with Facebook button tap
-  loginWithFacebook = () => this.openURL('http://192.168.0.101:3001/auth/facebook');
+  loginWithFacebook = () => this.openURL('http://172.16.28.117:3001/auth/facebook');
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('http://192.168.0.101:3001/auth/google');
+  loginWithGoogle = () => this.openURL('http://172.16.28.117:3001/auth/google');
 
   // Open URL in a browser
   openURL = (url) => {
@@ -119,7 +119,7 @@ static navigationOptions = {
 
 
 	checkCredentials = () => {
-fetch('http://192.168.43.114:3001/login', {
+fetch('http://172.16.28.117:3001/login', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
@@ -197,19 +197,18 @@ fetch('http://192.168.43.114:3001/login', {
           </View>
           <View style={styles.container}>
             <View style={styles.signupWrap}>
-              <Text style={styles.accountText}>Don not have an account?</Text>
+              <Text style={styles.accountText}>Do not have an account?</Text>
               <TouchableOpacity activeOpacity={.5} >
-                <View>
-					<Button
+                <View style={styles.button2} >
+					<Text style={styles.buttonText}
 						  onPress={() => navigate('signUp')}
-						  title="Sign Up"
-						/>
+						> Sign Up </Text>
                 </View>
               </TouchableOpacity>
             </View>
           </View>
 
-<View style={styles.buttons}>
+		<View style={styles.buttons}>
           <Icon.Button
             name="facebook"
             backgroundColor="#3b5998"
@@ -281,6 +280,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     paddingHorizontal: 10,
+	  color: "#FFFFFF",
   },
   button: {
     backgroundColor: "#FF3366",
@@ -288,6 +288,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
+  },
+button2: {
+    backgroundColor: "#FF3366",
+    paddingVertical: 20,
+	paddingHorizontal: 40,
+    justifyContent: "center",
+    marginTop: 20,
+	height: 50,
   },
   buttonText: {
     color: "#FFF",
@@ -306,7 +314,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   accountText: {
-    color: "#D8D8D8"
+    color: "#D8D8D8",
+	  paddingHorizontal: 20,
+	  marginTop: 20,
+	  fontSize: 20,
   },
   signupLinkText: {
     color: "#FFF",
