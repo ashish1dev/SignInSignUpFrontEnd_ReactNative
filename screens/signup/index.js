@@ -76,10 +76,10 @@ export default class SignupView extends Component {
   };
 
   // Handle Login with Facebook button tap
-  loginWithFacebook = () => this.openURL('http://192.168.43.114:3001/auth/facebook');
+  loginWithFacebook = () => this.openURL('http://13.59.36.21:3001/auth/facebook');
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('http://192.168.0.101:3001/auth/google');
+  loginWithGoogle = () => this.openURL('http://13.59.36.21:3001/auth/google');
 
   // Open URL in a browser
   openURL = (url) => {
@@ -122,7 +122,7 @@ static navigationOptions = {
 	}
 
 	joinUs = () => {
-		fetch('http://192.168.43.114:3001/signUp', {
+		fetch('http://13.59.36.21:3001/signUp', {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',

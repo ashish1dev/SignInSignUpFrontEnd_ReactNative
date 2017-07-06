@@ -78,10 +78,10 @@ componentDidMount() {
   };
 
   // Handle Login with Facebook button tap
-  loginWithFacebook = () => this.openURL('http://172.16.28.117:3001/auth/facebook');
+  loginWithFacebook = () => this.openURL('http://13.59.36.21:3001/auth/facebook');
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('http://172.16.28.117:3001/auth/google');
+  loginWithGoogle = () => this.openURL('http://13.59.36.21:3001/auth/google');
 
   // Open URL in a browser
   openURL = (url) => {
@@ -119,7 +119,7 @@ static navigationOptions = {
 
 
 	checkCredentials = () => {
-fetch('http://172.16.28.117:3001/login', {
+fetch('http://13.59.36.21:3001/login', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
