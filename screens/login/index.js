@@ -136,8 +136,8 @@ fetch('http://13.59.36.21:3001/login', {
 			if (responseData.status == "Failure")
 			{
 			Alert.alert(
-				"POST Response",
-				"Response Body -> " + (responseData.status)
+				"Failed",
+				"invalid username or password"
 			)}
 			if (responseData.status == "Success")
 			{
