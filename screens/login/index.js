@@ -81,7 +81,7 @@ componentDidMount() {
   loginWithFacebook = () => this.openURL('http://13.59.36.21:3001/auth/facebook');
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('http://13.59.36.21:3001/auth/google');
+  loginWithGoogle = () => this.openURL('http://ec2-13-59-36-21.us-east-2.compute.amazonaws.com:3001/auth/google');
 
   // Open URL in a browser
   openURL = (url) => {

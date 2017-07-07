@@ -26,13 +26,10 @@ export default class DrawerMenu extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-        active: 'people',
+        active: 'today',
       };
   }
 
-  _setInfoActive() {
-    this.setState({ active: 'info' });
-  }
 
   render() {
     return (

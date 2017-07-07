@@ -139,14 +139,14 @@ static navigationOptions = {
 			if (responseData.error == true)
 			{
 			Alert.alert(
-				"POST Response",
-				"Response Body -> " + (responseData.message)
+				"Sing Up",
+				"Something went wrong"
 			)}
 			if (responseData.error == false)
 			{
 			Alert.alert(
-				"POST Response",
-				"Response Body -> " + (responseData.message)
+				"Account Created",
+				"Login to continue",
 			)}	
 		})
 	}

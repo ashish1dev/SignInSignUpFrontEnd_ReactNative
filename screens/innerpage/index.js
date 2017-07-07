@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -15,15 +14,15 @@ import ClientView from './Pages/client';
 import InfoView from './Pages/info';
 import SettingsView from './Pages/setting';
 import Logout from './Pages/Logout';
+import Today from './Contents/today'
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 
 const stackNavigator = StackNavigator({
-  Info: { screen: InfoView },
-  Settings: {screen: SettingsView },
+  Client: {screen: ClientView},
+	Today: { screen: Today },
   Bookmark: {screen: BookmarkView },
   Calendar: {screen: CalendarView},
-  Client: {screen: ClientView},
   Logout: {screen: Logout},
 }, {
   headerMode: 'none'
@@ -34,7 +33,7 @@ export default easyRNRoute = DrawerNavigator({
     screen: App,
   },
   Stack: {
-    screen: stackNavigator
+    screen: App
   }
 }, {
   contentComponent: DrawerMenu,

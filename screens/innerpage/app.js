@@ -35,9 +35,6 @@ const uiTheme = {
 
 const TabRoute = TabRouter({
   Main: { screen: TodayView },
-  Profile: { screen: ProfileView },
-  Map: { screen: MapView },
-  Chat: {screen: ChatView}
   }, {
     initialRouteName: 'Main',
   }
