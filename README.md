@@ -1,15 +1,15 @@
-# demo by ectolus
+# SingUp SignIn page template in ReactNative
 This is a React Native App which contain login and signup screen with local, google and facebook authentication. Once login user will see his current location on the map.
 
 ##How to use the App.
 
-    
+
 
  - `git clone https://AdityaJangid@bitbucket.org/ectolus/signinsignupfrontend_reactnative.git`
  - `cd signinsignupfrontend_rectnative`
- 
+
  Now install all the other third party library dependencies by running the command
- 
+
  - `npm install`
 
 Sometimes an error come on Build on that case run the following command.
@@ -29,7 +29,7 @@ First you need to run this command inside the root directory of your project.
 
 - `react-native bundle --assets-dest ./android/app/src/main/res/ --entry-file ./index.android.js --bundle-output ./android/app/src/main/assets/index.android.bundle --platform android --dev false`
 
-Now open the android directory of the project in the android studio. 
+Now open the android directory of the project in the android studio.
 
 - click on Build in the top bar.
 - Then click on Generate Signed APK.
